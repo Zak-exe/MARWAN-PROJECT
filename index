@@ -16,7 +16,6 @@ void displayColor(byte r, byte g, byte b) {
 //analogWrite(PIN_LED_R, r);
 //analogWrite(PIN_LED_G, g);
 //analogWrite(PIN_LED_B, b);
-// Version anode commune
 analogWrite(PIN_LED_R, ~r);
 analogWrite(PIN_LED_G, ~g);
 analogWrite(PIN_LED_B, ~b);
