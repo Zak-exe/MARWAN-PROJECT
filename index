@@ -1,0 +1,50 @@
+#include "SR04.h" // Librairie
+const int trigPin = 2;
+const int echoPin = 3;
+const byte PIN_LED_R = 9;
+const byte PIN_LED_G = 10;
+const byte PIN_LED_B = 11;
+UltraSonicDistanceSensor distanceSensor(trigPin, echoPin); 
+void setup() {
+Serial.begin(9600) ; 
+pinMode(PIN_LED_R, OUTPUT);
+pinMode(PIN_LED_G, OUTPUT);
+pinMode(PIN_LED_B, OUTPUT);
+displayColor(0, 0, 0);
+}
+void displayColor(byte r, byte g, byte b) {
+//analogWrite(PIN_LED_R, r);
+//analogWrite(PIN_LED_G, g);
+//analogWrite(PIN_LED_B, b);
+// Version anode commune
+analogWrite(PIN_LED_R, ~r);
+analogWrite(PIN_LED_G, ~g);
+analogWrite(PIN_LED_B, ~b);
+}
+void loop() {
+float distance_mm =(distanceSensor.measureDistanceCm()*10);
+Serial.print(F("Distance: "));
+Serial.print(distance_mm);
+Serial.print(F("mm ("));
+Serial.print(distance_mm / 10.0, 2);
+Serial.print(F("cm, "));
+Serial.print(distance_mm / 1000.0, 2);
+Serial.println(F("m)"));
+delay(500); 
+if (distance_mm >= 300){displayColor(0, 255, 0);}
+if (300 > distance_mm and distance_mm >= 250){
+displayColor(0, 200, 0);
+}
+if (250 > distance_mm and distance_mm >= 200){
+displayColor(0, 100, 100);
+}
+if (200 > distance_mm and distance_mm >= 150){
+displayColor(100, 100, 0);
+}
+if (150 > distance_mm and distance_mm >= 100){
+displayColor(200, 0, 0);
+}
+if (distance_mm < 100){
+displayColor(255, 0, 0);
+}
+}
